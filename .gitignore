@@ -1,0 +1,4 @@
+dist/
+Lattice/
+*.log
+.DS_Store

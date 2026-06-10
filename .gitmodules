@@ -1,0 +1,24 @@
+[submodule "Lazurite-Toolbox"]
+	path = Lazurite-Toolbox
+	url = https://github.com/Cfretz244/Lazurite-Toolbox.git
+	branch = 26.1.2
+[submodule "Transporter"]
+	path = Transporter
+	url = https://github.com/Cfretz244/Transporter.git
+	branch = 26.1.2
+[submodule "Rayon"]
+	path = Rayon
+	url = https://github.com/Cfretz244/Rayon.git
+	branch = 26.1.2
+[submodule "Form"]
+	path = Form
+	url = https://github.com/Cfretz244/Form.git
+	branch = 26.1.2
+[submodule "Corduroy"]
+	path = Corduroy
+	url = https://github.com/Cfretz244/Corduroy.git
+	branch = 26.1.2
+[submodule "Quadz"]
+	path = Quadz
+	url = https://github.com/Cfretz244/Quadz.git
+	branch = 26.1.2
