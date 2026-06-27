@@ -1,0 +1,100 @@
+name: "🐞 Bug report"
+description: "Something in the Quadz drone mod didn't work right? Tell us here."
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing! Fill in what you can — you don't have to know anything
+        technical. Even a half-filled report is useful. The **log file** (last field) is
+        the single most helpful thing you can attach.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the problem in your own words.
+      placeholder: "e.g. I equipped the goggles and the screen went black instead of showing the drone view."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: What were you doing right before it happened?
+      description: A rough list of steps so we can try to reproduce it.
+      placeholder: |
+        1. Started a new Creative world
+        2. Grabbed a drone and the goggles from the creative menu
+        3. Put the goggles on
+        4. ...
+    validations:
+      required: false
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen instead?
+      placeholder: "e.g. I expected to see through the drone's camera."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: How bad is it?
+      options:
+        - "Minor — annoying but I can keep playing"
+        - "Medium — a feature is broken but the game still runs"
+        - "Major — the game crashes or won't start"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: What computer are you on?
+      options:
+        - "Mac"
+        - "Windows"
+        - "Other / not sure"
+    validations:
+      required: true
+
+  - type: input
+    id: build-version
+    attributes:
+      label: Which build?
+      description: >
+        If you know the date you last ran the build, or the jar version (e.g.
+        quadz-2.0.0.jar), put it here. If unsure, leave blank.
+      placeholder: "e.g. quadz-2.0.0.jar, built June 27"
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log file and/or screenshots
+      description: |
+        **This is the most important field.** Please attach your Minecraft log, and a
+        screenshot if the problem is visual.
+
+        **How to find the log (Mac):**
+        1. Open **Finder**.
+        2. In the top menu click **Go → Go to Folder…**
+        3. Paste this and press Return:
+           `~/Library/Application Support/minecraft/logs/latest.log`
+        4. Drag that `latest.log` file into this box. (If the game *crashed*, also grab the
+           newest file in `~/Library/Application Support/minecraft/crash-reports/`.)
+
+        **How to find the log (Windows):**
+        1. Press **Windows key + R**, type `%APPDATA%\.minecraft\logs`, press Enter.
+        2. Drag the `latest.log` file into this box. (If it crashed, also check
+           `%APPDATA%\.minecraft\crash-reports`.)
+
+        **Screenshot:** just drag the image file into this box, or paste it.
+      placeholder: "Drag your latest.log file and any screenshots here."
+    validations:
+      required: false

@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Just have a question or want to chat?
+    url: https://github.com/Cfretz244/LazuriteMC/discussions
+    about: For general discussion or questions (not a specific bug), use Discussions or our Discord instead.
