@@ -74,6 +74,8 @@ These four were a chain: each fix unblocked the next layer of the FPV path, whic
 
 ## 5. Hardware playtest status
 
+**PENDING FLY-TEST (pushed 2026-06-28):** Camera-angle readout rework — Quadz **`36f83f4`** / parent **`7327ec7`**. Dropped the "Cam" prefix (now just `45°`), gave the readout its own toggle (`cameraAngleDisplayEnabled`, under master OSD with speed/sticks), and when that toggle is off it flashes briefly (~2s, fading over the last ~0.6s) while the uptilt is being adjusted via the up/down keybinds. Implemented via a static tick-counter flash timer in `OnScreenDisplay` (`flashCameraAngle`/`tickFlash`/`isCameraAngleFlashing`), driven from `ClientEventHooks.onClientTick`. Builds + headless-loads clean. _Note: the flash is gated under the master OSD toggle (off = nothing shows), consistent with speed/sticks — flag if Jonathan wants it to flash even with master OSD off._
+
 **As of 2026-06-28 21:45 UTC the tester confirmed "everything from the last push works great."** That covers the Actual-rates fix (`47005ec`) and the stick position-dot scaling (`43b2355`), on top of the previously-confirmed entire FPV stack (crash/black/orientation/post-fx), camera uptilt, Betaflight rates, and HUD toggles + proportional sizing.
 
 **Everything shipped this session is flight-confirmed** — including **KISS** (tester flew it with 2.55/0.49/0 ≈ 1000°/s; "feels similar to my rates, just without the fully linear feeling" — the expected progression from KISS's Rate term). No outstanding unverified work.
