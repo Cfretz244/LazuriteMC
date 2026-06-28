@@ -76,8 +76,7 @@ These four were a chain: each fix unblocked the next layer of the FPV path, whic
 
 **As of 2026-06-28 21:45 UTC the tester confirmed "everything from the last push works great."** That covers the Actual-rates fix (`47005ec`) and the stick position-dot scaling (`43b2355`), on top of the previously-confirmed entire FPV stack (crash/black/orientation/post-fx), camera uptilt, Betaflight rates, and HUD toggles + proportional sizing.
 
-**So everything shipped this session is now flight-confirmed**, with one loose end:
-- **KISS profile** — not specifically called out by the tester; he primarily flies Betaflight/Actual. Treat as built-but-not-explicitly-verified; the per-profile-defaults work (§6.2) is the natural time to sanity-check its scaling.
+**Everything shipped this session is flight-confirmed** — including **KISS** (tester flew it with 2.55/0.49/0 ≈ 1000°/s; "feels similar to my rates, just without the fully linear feeling" — the expected progression from KISS's Rate term). No outstanding unverified work.
 
 **Known caveat (not a bug):** rate-curve *shapes* are authentic (ported from Betaflight firmware) but absolute *magnitudes* may need a pilot tuning pass. The three profiles currently SHARE one value triple, so good ranges differ per profile (Betaflight ~1–3 RC-rate; Actual ~hundreds of deg/s). Per-profile remembered values + defaults is planned (§6.2) to remove that footgun.
 
