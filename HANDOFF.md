@@ -72,16 +72,14 @@ These four were a chain: each fix unblocked the next layer of the FPV path, whic
 6. **Rate profiles** — Betaflight / Actual / KISS selector; profile-aware field labels; synced to server as a `rate_profile` joystick "axis"; re-applied on config save (no relog). → Quadz **`d03f2fa`**. **Actual-rates bug fix** (was ×200-scaling the deg/s values → 180000°/s sensitivity → uncontrolled spin; now used as deg/s directly) → Quadz **`47005ec`**.
 7. **Adjustable camera uptilt (FPV)** — rebindable Up/Down keybinds (default arrows, "Quadz" category) nudge the viewed drone's `CAMERA_ANGLE` ±1°/press, clamped 0–90, via `ADJUST_CAMERA_ANGLE` packet; synced/persistent per-drone; "Cam n°" OSD readout. → Quadz **`e49d338`** / parent `f73039f`.
 
-## 5. Untested on hardware (awaiting tester fly-test)
+## 5. Hardware playtest status
 
-Code builds + loads clean, but NOT yet flight-confirmed:
-- **Actual-rates fix** (`47005ec`) — tester to re-fly with his 900/900 values.
-- **KISS profile** — never flight-tested by anyone; magnitude scaling unverified.
-- **Stick position-dot scaling** (`43b2355`) — visual tweak unconfirmed.
+**As of 2026-06-28 21:45 UTC the tester confirmed "everything from the last push works great."** That covers the Actual-rates fix (`47005ec`) and the stick position-dot scaling (`43b2355`), on top of the previously-confirmed entire FPV stack (crash/black/orientation/post-fx), camera uptilt, Betaflight rates, and HUD toggles + proportional sizing.
 
-Confirmed good by tester: entire FPV stack (crash/black/orientation/post-fx), camera uptilt feel, Betaflight rates, HUD toggles + proportional sizing.
+**So everything shipped this session is now flight-confirmed**, with one loose end:
+- **KISS profile** — not specifically called out by the tester; he primarily flies Betaflight/Actual. Treat as built-but-not-explicitly-verified; the per-profile-defaults work (§6.2) is the natural time to sanity-check its scaling.
 
-**Known caveat (not a bug):** rate-curve *shapes* are authentic (ported from Betaflight firmware) but absolute *magnitudes* may need a pilot tuning pass. The three profiles currently SHARE one value triple, so good ranges differ per profile (Betaflight ~1–3 RC-rate; Actual ~hundreds of deg/s). Per-profile remembered values + defaults is planned (see §6) to remove that footgun.
+**Known caveat (not a bug):** rate-curve *shapes* are authentic (ported from Betaflight firmware) but absolute *magnitudes* may need a pilot tuning pass. The three profiles currently SHARE one value triple, so good ranges differ per profile (Betaflight ~1–3 RC-rate; Actual ~hundreds of deg/s). Per-profile remembered values + defaults is planned (§6.2) to remove that footgun.
 
 ## 6. Planned work / backlog
 
