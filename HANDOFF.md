@@ -2,17 +2,17 @@
 
 _Living document. Keep it in sync after any non-trivial change so the next agent can pick up cleanly._
 
-Last updated: 2026-06-28, after the FPV bug-fix run + first wave of feature work.
+Last updated: 2026-06-29, after the rate/controls + arming + uptilt feature run.
 
 ---
 
 ## 0. TL;DR — current status
 
-- **Repo is in a clean, fully-pushed state.** Nothing half-implemented; no leftover temp/debug code; builds + dev-client-loads clean.
-- Pinned commits: **parent `Cfretz244/LazuriteMC@main` = `406cba8`**, **Quadz `47005ec`**, **Corduroy `f02cce8`** (other submodules unchanged this session).
-- **All 4 FPV bug fixes are confirmed in-world** by the tester. A first wave of features is shipped.
-- **Three recently-pushed items still await hardware fly-test** (see §5).
-- **Next work:** a single "rate/controls" batch (see §6).
+- **Repo is in a clean, fully-pushed state.** Nothing half-implemented; no leftover temp/debug code (the stray "TEST" button was removed this run); builds + dev-client-loads clean.
+- Pinned commits (after this run): **parent `Cfretz244/LazuriteMC@main` = `4f68465`** (HANDOFF commit will advance it), **Quadz `0ecf1f6`**, **Form `b1f5471`**, **Corduroy `f02cce8`** (Rayon/Toolbox/Transporter unchanged this run).
+- **Shipped + tester-confirmed this run:** camera-angle readout rework; a serious **Form template-loss-on-world-reload** bug fix; the **whole rate/controls group** (per-profile values+defaults, instant live-relabel, per-axis "Link Axes" + unlink seeding); config-screen polish; **arming switch** (keyboard + controller axis switch, DISARMED OSD, arm-position light); **uptilt-persists-past-pickup**.
+- **Awaiting tester's next-day test (pushed, he logged off):** uptilt-persist (`c5a9f80`) + arm/disarm-in-LOS (`0ecf1f6`). See §5.
+- **Next work:** remaining backlog — adjustable FPV FOV, 3D flight mode, throttle cap/expo + hover, rate-curve graph (see §6, items 7–10).
 
 ---
 
@@ -73,6 +73,8 @@ These four were a chain: each fix unblocked the next layer of the FPV path, whic
 7. **Adjustable camera uptilt (FPV)** — rebindable Up/Down keybinds (default arrows, "Quadz" category) nudge the viewed drone's `CAMERA_ANGLE` ±1°/press, clamped 0–90, via `ADJUST_CAMERA_ANGLE` packet; synced/persistent per-drone; "Cam n°" OSD readout. → Quadz **`e49d338`** / parent `f73039f`.
 
 ## 5. Hardware playtest status
+
+**PENDING FLY-TEST (pushed 2026-06-29, tester testing next day):** Arm/disarm now works in **line-of-sight**, not just FPV — Quadz **`0ecf1f6`** / parent **`4f68465`**. Was gated on "the drone you view through" (FPV camera), so it no-opped in LOS (camera = player). Now resolves the controlled drone by **camera OR bound remote** on both sides: client `ClientEventHooks.controllingQuadcopter()` = `getQuadcopterFromCamera()` ‖ `getQuadcopterFromRemote()` (used for both keyboard + controller arm); server `ServerNetworkEventHooks.controlledQuadcopter(ServerPlayer, server)` = camera-if-Quadcopter else `Search.forQuadWithBindId` via the held remote (within view distance). Disarming in LOS cuts motors + stops props (flight gating + prop anim already key off `isArmed`). Builds + headless-loads clean. _Gotcha hit: `getCamera()` is on `ServerPlayer`, not `Player` — `context.player()` returns `ServerPlayer`._
 
 **PENDING FLY-TEST (pushed 2026-06-29):** Uptilt persists past pickup (backlog §6.6) — Quadz **`c5a9f80`** / parent **`f9928af`**. The adjusted camera uptilt previously reset to the template default when a drone was picked up + re-placed. Now: `Quadcopter.kill` stashes the entity's `CAMERA_ANGLE` onto the dropped item via a new persistent `QuadzComponents.CAMERA_ANGLE` data component; `QuadcopterItem.use` reads it and calls `entity.setPendingCameraAngle(...)`; `ServerEventHooks.onEntityTemplateChanged` (fires from `refreshDimensions()` on the entity's first tick, which is what reset the angle) now honors the pending angle if present (consumed once), else template default. Key timing detail: the reset happens on first tick not in `use()`, hence the pending-angle indirection rather than setting the entity angle directly. Fresh/creative items (no component) still get the template default. Builds + headless-loads clean (component registers); pickup→replace round-trip needs tester confirmation.
 
